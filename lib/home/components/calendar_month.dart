@@ -13,22 +13,8 @@ class CalendarMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monthStr = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro'
-    ][list[15].month - 1];
+    final monthStr = months[list[15].month - 1];
     bool current = false;
-    final weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
