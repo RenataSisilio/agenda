@@ -14,21 +14,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController(HomeRepository());
+  final today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    final pageController =
-        PageController(initialPage: controller.date.month - 1);
+    final pageController = PageController(
+        initialPage: today.month + 11); //index of current month
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: const Icon(
-            Icons.menu,
-          ),
+          icon: const Icon(Icons.menu),
         ),
         title: const Text('Nome'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: Center(
         child: FutureBuilder(
@@ -37,15 +41,24 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.hasData && !snapshot.hasError) {
                 return PageView(
                   controller: pageController,
-                  children: List.generate(12, (index) {
-                    controller.setDate(DateTime(2022, index + 1));
-                    return CalendarMonth(list: controller.rangeDaysList());
+                  children: List.generate(36, (index) {
+                    controller.setDate(
+                      index < 12 // previous year
+                          ? DateTime(today.year - 1, index + 1)
+                          : index < 24 // current year
+                              ? DateTime(today.year, index - 12 + 1)
+                              : DateTime( // next year
+                                  today.year + 1, index - 24 + 1),
+                    );
+                    return Center(
+                      child: CalendarMonth(list: controller.rangeDaysList()),
+                    );
                   }),
                 );
               }
               if (snapshot.hasError) {
                 return const Text(
-                  'Error',
+                  'Erro',
                 );
               }
               return const CircularProgressIndicator();
