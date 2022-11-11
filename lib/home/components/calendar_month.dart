@@ -13,31 +13,77 @@ class CalendarMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final monthStr = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro'
+    ][list[15].month - 1];
     bool current = false;
+    final weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7, //days per week
-            childAspectRatio: 1, //square
-            mainAxisSpacing: 4.0,
-            crossAxisSpacing: 4.0,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppBar(
+            title: Text(monthStr),
+            actions: [
+              Center(child: Text('${list[15].year}')),
+              const SizedBox(
+                width: 16.0,
+              )
+            ],
           ),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            if (list[index].day == 1) {
-              current = !current;
-            }
-            return Day(
-              list[index].day,
-              hasEvents: allEvents.any((event) => event.date == list[index]),
-              hasParticipation:
-                  list[index].day % 5 == 0, //just for layout testing
-              color: Colors.blue,
-              currentMonth: current,
-            );
-          }),
+          Row(
+            children: List.generate(
+              7,
+              (index) => Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      weekdays[index],
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 7, //days per week
+                childAspectRatio: 1, //square
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+              ),
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                if (list[index].day == 1) {
+                  current = !current;
+                }
+                return Day(
+                  list[index].day,
+                  hasEvents:
+                      allEvents.any((event) => event.date == list[index]),
+                  hasParticipation:
+                      list[index].day % 5 == 0, //just for layout testing
+                  color: Colors.blue,
+                  currentMonth: current,
+                );
+              }),
+        ],
+      ),
     );
   }
 }
