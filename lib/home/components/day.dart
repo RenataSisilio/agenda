@@ -24,6 +24,7 @@ class Day extends StatelessWidget {
         ? hasEvents
             ? ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(color: color!)),
@@ -41,6 +42,7 @@ class Day extends StatelessWidget {
             : hasParticipation
                 ? OutlinedButton(
                     style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
                         foregroundColor: color,
                         side: BorderSide(width: 2.0, color: color!),
                         shape: RoundedRectangleBorder(
@@ -56,6 +58,7 @@ class Day extends StatelessWidget {
                   )
                 : OutlinedButton(
                     style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
                         foregroundColor: Colors.black54,
                         side: const BorderSide(
                           width: 2.0,
@@ -69,6 +72,7 @@ class Day extends StatelessWidget {
                   )
         : TextButton(
             style: TextButton.styleFrom(
+              padding: const EdgeInsets.all(0),
               foregroundColor: Colors.black45,
             ),
             onPressed: null,
