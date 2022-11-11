@@ -17,7 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final pageController = PageController(initialPage: controller.date.month);
+    final pageController =
+        PageController(initialPage: controller.date.month - 1);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
