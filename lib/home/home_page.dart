@@ -17,8 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final list =
-        controller.rangeDaysList(DateTime.now().year, DateTime.now().month);
+    final pageController = PageController(initialPage: controller.date.month);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -35,7 +34,13 @@ class _HomePageState extends State<HomePage> {
             future: controller.getData(),
             builder: (context, snapshot) {
               if (snapshot.hasData && !snapshot.hasError) {
-                return CalendarMonth(list: list);
+                return PageView(
+                  controller: pageController,
+                  children: List.generate(12, (index) {
+                    controller.setDate(DateTime(2022, index + 1));
+                    return CalendarMonth(list: controller.rangeDaysList());
+                  }),
+                );
               }
               if (snapshot.hasError) {
                 return const Text(
