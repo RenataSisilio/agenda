@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
 import 'components/calendar_month.dart';
 import 'components/legend_fab.dart';
 import 'home_controller.dart';
@@ -14,12 +15,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController(HomeRepository());
-  final today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    final pageController = PageController(
-        initialPage: today.month + 11); //index of current month
+    final pageController =
+        PageController(initialPage: today.month + 11); //index of current month
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,8 +47,10 @@ class _HomePageState extends State<HomePage> {
                           ? DateTime(today.year - 1, index + 1)
                           : index < 24 // current year
                               ? DateTime(today.year, index - 12 + 1)
-                              : DateTime( // next year
-                                  today.year + 1, index - 24 + 1),
+                              : DateTime(
+                                  // next year
+                                  today.year + 1,
+                                  index - 24 + 1),
                     );
                     return Center(
                       child: CalendarMonth(list: controller.rangeDaysList()),

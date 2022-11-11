@@ -1,10 +1,12 @@
 import 'package:agenda/home/home_repository.dart';
 
+import '../globals.dart';
+
 class HomeController {
   HomeController(this.repository);
 
   final HomeRepository repository;
-  DateTime _date = DateTime.now();
+  DateTime _date = today;
 
   Future<bool> getData() async {
     return await repository.getData();

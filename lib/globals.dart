@@ -17,6 +17,8 @@ const months = [
 
 const weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB'];
 
+final today = DateTime.now();
+
 final allEvents = [
-  Mission(ministry: 'Música', dateTime: DateTime.now(), missionaries: []),
+  Mission(ministry: 'Música', dateTime: today, missionaries: []),
 ];
