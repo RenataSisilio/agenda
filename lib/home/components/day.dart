@@ -30,7 +30,12 @@ class Day extends StatelessWidget {
                   elevation: 0,
                   backgroundColor: color,
                 ),
-                onPressed: () {},
+                onPressed: () => _detailsBottomSheet(
+                  context: context,
+                  child:
+                      text, //criar página de detalhes para eventos com participação
+                  routeName: 'routeName',
+                ),
                 child: text,
               )
             : hasParticipation
@@ -41,7 +46,12 @@ class Day extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         )),
-                    onPressed: () {},
+                    onPressed: () => _detailsBottomSheet(
+                      context: context,
+                      child:
+                          text, //criar página de detalhes para eventos sem participação
+                      routeName: 'routeName',
+                    ),
                     child: text,
                   )
                 : OutlinedButton(
@@ -54,15 +64,67 @@ class Day extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         )),
-                    onPressed: () {},
+                    onPressed: null,
                     child: text,
                   )
         : TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Colors.black45,
             ),
-            onPressed: () {},
+            onPressed: null,
             child: text,
           );
   }
 }
+
+Future<T?> _detailsBottomSheet<T>({
+  required BuildContext context,
+  required Widget child,
+  required String routeName,
+  bool enableDrag = true,
+  bool isDismissible = true,
+  bool useRootNavigator = false,
+  bool showTopDotGrey = true,
+  bool isScrollControlled = false,
+  double heightRatio = 0.5,
+}) async =>
+    await showModalBottomSheet<T>(
+      useRootNavigator: useRootNavigator,
+      isDismissible: isDismissible,
+      enableDrag: enableDrag,
+      isScrollControlled: isScrollControlled,
+      context: context,
+      routeSettings: RouteSettings(name: routeName),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8.0),
+          topRight: Radius.circular(8.0),
+        ),
+      ),
+      builder: (BuildContext context) => SafeArea(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            topRight: Radius.circular(8.0),
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * heightRatio,
+            ),
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                child,
+                Visibility(
+                  visible: showTopDotGrey,
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 16.0),
+                    child: SizedBox.shrink(), //ModalPill(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
