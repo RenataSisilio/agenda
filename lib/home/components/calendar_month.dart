@@ -66,6 +66,7 @@ class CalendarMonth extends StatelessWidget {
                       list[index].day % 5 == 0, //just for layout testing
                   color: Colors.blue,
                   currentMonth: current,
+                  isToday: list[index] == today,
                 );
               }),
         ],

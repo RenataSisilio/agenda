@@ -7,6 +7,7 @@ class Day extends StatelessWidget {
     this.hasParticipation = false,
     this.currentMonth = true,
     this.color,
+    this.isToday = false,
     Key? key,
   })  : assert(!(hasEvents || hasParticipation) || color != null),
         super(key: key);
@@ -16,6 +17,7 @@ class Day extends StatelessWidget {
   final bool hasParticipation;
   final Color? color;
   final bool currentMonth;
+  final bool isToday;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,11 @@ class Day extends StatelessWidget {
             ? ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide(color: color!)),
+                  shape: isToday
+                      ? CircleBorder(side: BorderSide(color: color!))
+                      : RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          side: BorderSide(color: color!)),
                   elevation: 0,
                   backgroundColor: color,
                 ),
@@ -35,38 +39,44 @@ class Day extends StatelessWidget {
                   context: context,
                   child:
                       text, //criar página de detalhes para eventos com participação
-                  routeName: 'routeName',
+                  //routeName: 'routeName',
                 ),
                 child: text,
               )
             : hasParticipation
                 ? OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.all(0),
-                        foregroundColor: color,
-                        side: BorderSide(width: 2.0, color: color!),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        )),
+                      padding: const EdgeInsets.all(0),
+                      foregroundColor: color,
+                      side: BorderSide(width: 2.0, color: color!),
+                      shape: isToday
+                          ? const CircleBorder()
+                          : RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                    ),
                     onPressed: () => _detailsBottomSheet(
                       context: context,
                       child:
                           text, //criar página de detalhes para eventos sem participação
-                      routeName: 'routeName',
+                      //routeName: 'routeName',
                     ),
                     child: text,
                   )
                 : OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.all(0),
-                        foregroundColor: Colors.black54,
-                        side: const BorderSide(
-                          width: 2.0,
-                          color: Colors.black45,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        )),
+                      padding: const EdgeInsets.all(0),
+                      foregroundColor: Colors.black54,
+                      side: const BorderSide(
+                        width: 2.0,
+                        color: Colors.black45,
+                      ),
+                      shape: isToday
+                          ? const CircleBorder()
+                          : RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                    ),
                     onPressed: null,
                     child: text,
                   )
@@ -84,7 +94,7 @@ class Day extends StatelessWidget {
 Future<T?> _detailsBottomSheet<T>({
   required BuildContext context,
   required Widget child,
-  required String routeName,
+  //required String routeName,
   bool enableDrag = true,
   bool isDismissible = true,
   bool useRootNavigator = false,
@@ -98,7 +108,7 @@ Future<T?> _detailsBottomSheet<T>({
       enableDrag: enableDrag,
       isScrollControlled: isScrollControlled,
       context: context,
-      routeSettings: RouteSettings(name: routeName),
+      //routeSettings: RouteSettings(name: routeName),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(8.0),

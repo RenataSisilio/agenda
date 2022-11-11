@@ -21,5 +21,6 @@ final now = DateTime.now();
 final today = DateTime(now.year, now.month, now.day);
 
 final allEvents = [
-  Mission(ministry: 'Música', dateTime: today, missionaries: []),
+  Mission(
+      ministry: 'Música', dateTime: DateTime(2022, 11, 9), missionaries: []),
 ];
