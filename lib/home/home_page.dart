@@ -39,9 +39,10 @@ class _HomePageState extends State<HomePage> {
             future: controller.getData(),
             builder: (context, snapshot) {
               if (snapshot.hasData && !snapshot.hasError) {
-                return PageView(
+                return PageView.builder(
                   controller: pageController,
-                  children: List.generate(36, (index) {
+                  itemCount: 36,
+                  itemBuilder: (context, index) {
                     controller.setDate(
                       index < 12 // previous year
                           ? DateTime(today.year - 1, index + 1)
@@ -53,9 +54,11 @@ class _HomePageState extends State<HomePage> {
                                   index - 24 + 1),
                     );
                     return Center(
-                      child: CalendarMonth(list: controller.rangeDaysList()),
+                      child: SingleChildScrollView(
+                        child: CalendarMonth(list: controller.rangeDaysList()),
+                      ),
                     );
-                  }),
+                  },
                 );
               }
               if (snapshot.hasError) {
