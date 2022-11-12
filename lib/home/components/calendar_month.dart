@@ -37,7 +37,9 @@ class CalendarMonth extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      weekdays[index],
+                      MediaQuery.of(context).size.width > 400
+                          ? weekdays[index]
+                          : weekdays[index][0],
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
@@ -60,13 +62,13 @@ class CalendarMonth extends StatelessWidget {
                 }
                 return Day(
                   list[index].day,
-                  hasEvents:
-                      allEvents.any((event) => event.date == list[index]),
-                  hasParticipation:
-                      list[index].day % 5 == 0, //just for layout testing
                   color: Colors.blue,
                   currentMonth: current,
                   isToday: list[index] == today,
+                  events: allEvents
+                      .where(
+                          (event) => event.date.isAtSameMomentAs(list[index]))
+                      .toList(),
                 );
               }),
         ],
