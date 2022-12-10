@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
-import 'components/calendar_month.dart';
-import 'components/legend_fab.dart';
+import 'widgets/calendar_month.dart';
+import 'widgets/legend_fab.dart';
 import 'home_controller.dart';
 import 'home_repository.dart';
 
