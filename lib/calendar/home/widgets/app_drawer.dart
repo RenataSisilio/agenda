@@ -31,6 +31,11 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context).pushNamed('/new-event');
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Perfil'),
+              onTap: () => Navigator.of(context).pushNamed('/profile'),
+            ),
           ],
         ),
       ),
