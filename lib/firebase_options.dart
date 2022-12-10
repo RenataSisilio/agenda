@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import 'ids.dart';
+
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -46,30 +48,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDMu1uIc-h5CqjABHA4DrCxLjkYo5tLqq8',
-    appId: '1:714569368509:web:245fc131cd1515a0e3c8d4',
-    messagingSenderId: '714569368509',
-    projectId: 'missionary-calendar-ab1ad',
-    authDomain: 'missionary-calendar-ab1ad.firebaseapp.com',
-    storageBucket: 'missionary-calendar-ab1ad.appspot.com',
-  );
+  static const FirebaseOptions web = webFirebaseOptions;
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA5eImtRRapmvKxSDynJec5XNHoqA1RIyY',
-    appId: '1:714569368509:android:9d253c4464a069f3e3c8d4',
-    messagingSenderId: '714569368509',
-    projectId: 'missionary-calendar-ab1ad',
-    storageBucket: 'missionary-calendar-ab1ad.appspot.com',
-  );
+  static const FirebaseOptions android = androidFirebaseOptions;
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDnVqrkTEhVBlzXG-NWCY4lFlTsLGm6UjE',
-    appId: '1:714569368509:ios:18fbbf188bb0f8f8e3c8d4',
-    messagingSenderId: '714569368509',
-    projectId: 'missionary-calendar-ab1ad',
-    storageBucket: 'missionary-calendar-ab1ad.appspot.com',
-    iosClientId: '714569368509-10vvkt1va75p6rcg1gne2s4tiuj06125.apps.googleusercontent.com',
-    iosBundleId: 'com.example.agenda',
-  );
+  static const FirebaseOptions ios = iosFirebaseOptions;
 }
