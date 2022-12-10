@@ -10,6 +10,7 @@ import 'auth/sign_in_page.dart';
 import 'auth/splash_page.dart';
 import 'firebase_options.dart';
 import 'home/home_page.dart';
+import 'new_event/new_event_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/sign-in': (context) => const SignInPage(),
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
+        '/new-event': (context) => const NewEventPage(),
       },
       initialRoute: '/splash',
     );

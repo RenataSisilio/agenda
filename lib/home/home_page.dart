@@ -46,6 +46,16 @@ class _HomePageState extends State<HomePage> {
                 title: const Text('Sair'),
                 onTap: () => logout(),
               ),
+              ListTile(
+                leading: const Icon(Icons.add),
+                title: const Text('Novo Evento'),
+                onTap: () {
+                  if (Navigator.of(context).canPop()) {
+                    Navigator.of(context).pop();
+                  }
+                  Navigator.of(context).pushNamed('/new-event');
+                },
+              ),
             ],
           ),
         ),
