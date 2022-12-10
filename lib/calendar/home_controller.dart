@@ -12,8 +12,14 @@ class HomeController extends Cubit<HomeState> {
   final HomeRepository repository;
   DateTime _date = today;
 
-  Future<bool> getData() async {
-    return await repository.getData();
+  void getData() async {
+    emit(LoadingHomeState());
+    final success = await repository.getData();
+    if (success) {
+      emit(SuccessHomeState());
+    } else {
+      emit(ErrorHomeState());
+    }
   }
 
   DateTime get date => _date;
@@ -43,12 +49,16 @@ class HomeController extends Cubit<HomeState> {
     return list;
   }
 
-  Future<DocumentReference> addEvent(String description, DateTime date) {
+  void addEvent(String description, DateTime date) async {
     final firestore = FirebaseFirestore.instance;
     final userName = FirebaseAuth.instance.currentUser!.displayName;
-    return firestore.collection('$userName Events').add(<String, dynamic>{
+    emit(LoadingHomeState());
+    await firestore.collection('$userName Events').add(<String, dynamic>{
       'text': description,
       'timestamp': date,
-    });
+    }).then(
+      (_) => getData(),
+      onError: (_) => emit(ErrorHomeState()),
+    );
   }
 }
