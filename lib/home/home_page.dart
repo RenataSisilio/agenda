@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../globals.dart';
@@ -16,16 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController(HomeRepository());
 
+  void logout() async {
+    final navigator = Navigator.of(context);
+    await FirebaseAuth.instance.signOut();
+    navigator.pushReplacementNamed('/splash');
+  }
+
   @override
   Widget build(BuildContext context) {
     final pageController =
         PageController(initialPage: today.month + 11); //index of current month
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
         title: const Text('Nome'),
         actions: [
           IconButton(
@@ -33,6 +36,19 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.search),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('Sair'),
+                onTap: () => logout(),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
         child: FutureBuilder(
