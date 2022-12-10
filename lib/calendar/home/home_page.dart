@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: Center(
         child: BlocBuilder<HomeController, HomeState>(
+          bloc: controller,
           builder: (context, state) {
             if (state is SuccessHomeState) {
               return PageView.builder(
@@ -62,9 +63,7 @@ class _HomePageState extends State<HomePage> {
               );
             }
             if (state is ErrorHomeState) {
-              return const Text(
-                'Erro',
-              );
+              return const Text('Erro');
             }
             return const CircularProgressIndicator();
           },

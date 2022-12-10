@@ -7,7 +7,9 @@ import 'home/home_repository.dart';
 import 'home/home_state.dart';
 
 class HomeController extends Cubit<HomeState> {
-  HomeController(this.repository) : super(LoadingHomeState());
+  HomeController(this.repository) : super(LoadingHomeState()) {
+    getData();
+  }
 
   final HomeRepository repository;
   DateTime _date = today;
