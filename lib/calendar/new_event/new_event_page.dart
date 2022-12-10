@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../home/home_repository.dart';
+import '../home_controller.dart';
 import 'widgets/date_picker_form_field.dart';
 
 class NewEventPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class _NewEventPageState extends State<NewEventPage> {
   final formKey = GlobalKey<FormState>();
   final description = TextEditingController();
   final date = TextEditingController();
+
+  final controller = HomeController(HomeRepository());
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,13 @@ class _NewEventPageState extends State<NewEventPage> {
                         onPressed: () {
                           if (formKey.currentState?.validate() ?? false) {
                             final navigator = Navigator.of(context);
-                            //TODO: salvar no firestore
+                            final dateAsList = date.text
+                                .split('/')
+                                .map((e) => int.parse(e))
+                                .toList();
+                            final formattedDate = DateTime(
+                                dateAsList[2], dateAsList[1], dateAsList[0]);
+                            controller.addEvent(description.text, formattedDate);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 behavior: SnackBarBehavior.floating,

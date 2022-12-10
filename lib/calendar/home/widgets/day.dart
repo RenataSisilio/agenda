@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../globals.dart';
-import '../../models/mission.dart';
+import '../../../globals.dart';
+import '../../../models/mission.dart';
 import 'bottom_sheet.dart';
 import 'day_event_list.dart';
 

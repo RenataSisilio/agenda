@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../globals.dart';
+import '../../globals.dart';
 import 'widgets/calendar_month.dart';
 import 'widgets/legend_fab.dart';
-import 'home_controller.dart';
+import '../home_controller.dart';
 import 'home_repository.dart';
 
 class HomePage extends StatefulWidget {

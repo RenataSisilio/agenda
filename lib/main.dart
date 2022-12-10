@@ -9,8 +9,8 @@ import 'auth/profile_page.dart';
 import 'auth/sign_in_page.dart';
 import 'auth/splash_page.dart';
 import 'firebase_options.dart';
-import 'home/home_page.dart';
-import 'new_event/new_event_page.dart';
+import 'calendar/home/home_page.dart';
+import 'calendar/new_event/new_event_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

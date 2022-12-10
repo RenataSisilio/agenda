@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../globals.dart';
-import '../../models/mission.dart';
+import '../../../globals.dart';
+import '../../../models/mission.dart';
 
 class DayEventList extends StatelessWidget {
   const DayEventList({

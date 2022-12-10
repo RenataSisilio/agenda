@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../globals.dart';
+import '../../../globals.dart';
 import 'day.dart';
 
 class CalendarMonth extends StatelessWidget {

@@ -1,9 +1,13 @@
-import 'package:agenda/home/home_repository.dart';
+import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../globals.dart';
+import 'home/home_repository.dart';
+import 'home/home_state.dart';
 
-class HomeController {
-  HomeController(this.repository);
+class HomeController extends Cubit<HomeState> {
+  HomeController(this.repository) : super(LoadingHomeState());
 
   final HomeRepository repository;
   DateTime _date = today;
@@ -37,5 +41,14 @@ class HomeController {
       list.add(day);
     }
     return list;
+  }
+
+  Future<DocumentReference> addEvent(String description, DateTime date) {
+    final firestore = FirebaseFirestore.instance;
+    final userName = FirebaseAuth.instance.currentUser!.displayName;
+    return firestore.collection('$userName Events').add(<String, dynamic>{
+      'text': description,
+      'timestamp': date,
+    });
   }
 }
