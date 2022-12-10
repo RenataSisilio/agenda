@@ -21,6 +21,7 @@ class CalendarMonth extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AppBar(
+            automaticallyImplyLeading: false,
             title: Text(monthStr),
             actions: [
               Center(child: Text('${list[15].year}')),
