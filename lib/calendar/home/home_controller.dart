@@ -1,6 +1,5 @@
+import 'package:agenda/models/mission.dart';
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../globals.dart';
 import 'home_repository.dart';
@@ -18,7 +17,8 @@ class HomeController extends Cubit<HomeState> {
     emit(LoadingHomeState());
     firestoreRepo = HomeFirestoreRepository();
     try {
-      final missions = await firestoreRepo.getMissionsByMinistry('test-ministry-id');
+      final missions =
+          await firestoreRepo.getMissionsByMinistry('test-ministry-id');
       emit(SuccessHomeState(missions));
     } catch (e) {
       emit(ErrorHomeState());
@@ -52,16 +52,21 @@ class HomeController extends Cubit<HomeState> {
     return list;
   }
 
-  void addEvent(String description, DateTime date) async {
-    final firestore = FirebaseFirestore.instance;
-    final userName = FirebaseAuth.instance.currentUser!.displayName;
+  Future<bool> addEvent(String description, DateTime date) async {
     emit(LoadingHomeState());
-    await firestore.collection('$userName Events').add(<String, dynamic>{
-      'text': description,
-      'timestamp': date,
-    }).then(
-      (_) => getData(),
-      onError: (_) => emit(ErrorHomeState()),
-    );
+    final bool success;
+    try {
+      success = await firestoreRepo.saveMission(
+        Mission(description,
+            ministry: 'ministryId',
+            dateTime: date,
+            idMissionariesList: ['testUserId'],
+            local: 'local'),
+      );
+      getData();
+    } catch (e) {
+      return false;
+    }
+    return success;
   }
 }

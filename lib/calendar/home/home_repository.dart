@@ -84,8 +84,16 @@ class HomeFirestoreRepository implements HomeRepository {
   }
 
   @override
-  Future<bool> saveMission(Mission mission) {
-    // TODO: implement saveMission
-    throw UnimplementedError();
+  Future<bool> saveMission(Mission mission) async {
+    try {
+      await firestore
+          .collection(Paths.ministryCollection)
+          .doc(mission.ministry)
+          .collection(Paths.missionCollection)
+          .add(mission.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

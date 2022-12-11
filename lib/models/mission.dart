@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Mission {
   Mission(
     this.description, {
-    required this.id,
+    this.id,
     required this.ministry,
     required this.dateTime,
     required this.idMissionariesList,
     required this.local,
   });
 
-  final String id;
+  final String? id;
   final List<String> idMissionariesList;
   final String ministry;
   final DateTime dateTime;
