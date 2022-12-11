@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../home/home_repository.dart';
-import '../home_controller.dart';
+import '../home/home_controller.dart';
 import 'widgets/date_picker_form_field.dart';
 
 class NewEventPage extends StatefulWidget {

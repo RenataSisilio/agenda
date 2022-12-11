@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../globals.dart';
-import 'home/home_repository.dart';
-import 'home/home_state.dart';
+import '../../globals.dart';
+import 'home_repository.dart';
+import 'home_state.dart';
 
 class HomeController extends Cubit<HomeState> {
   HomeController(this.repository) : super(LoadingHomeState()) {
