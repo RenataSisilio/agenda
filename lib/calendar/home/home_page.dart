@@ -8,7 +8,6 @@ import 'widgets/app_drawer.dart';
 import 'widgets/calendar_month.dart';
 import 'widgets/legend_fab.dart';
 import 'home_controller.dart';
-import 'home_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController(HomeRepository());
+  final controller = HomeController();
 
   @override
   Widget build(BuildContext context) {

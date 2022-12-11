@@ -7,19 +7,20 @@ import 'home_repository.dart';
 import 'home_state.dart';
 
 class HomeController extends Cubit<HomeState> {
-  HomeController(this.repository) : super(LoadingHomeState()) {
+  HomeController() : super(LoadingHomeState()) {
     getData();
   }
 
-  final HomeRepository repository;
+  late final HomeFirestoreRepository firestoreRepo;
   DateTime _date = today;
 
   void getData() async {
     emit(LoadingHomeState());
-    final success = await repository.getData();
-    if (success) {
-      emit(SuccessHomeState());
-    } else {
+    firestoreRepo = HomeFirestoreRepository();
+    try {
+      final missions = await firestoreRepo.getMissionsByMinistry('test-ministry-id');
+      emit(SuccessHomeState(missions));
+    } catch (e) {
       emit(ErrorHomeState());
     }
   }

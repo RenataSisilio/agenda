@@ -1,44 +1,63 @@
-import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Mission {
   Mission(
-    this._description, {
-    required String ministry,
-    required DateTime dateTime,
-    required List<Uuid> missionaries,
-    String local = '',
-  })  : _ministry = ministry,
-        _dateTime = dateTime,
-        _idMissionariesList = missionaries,
-        _local = local;
+    this.description, {
+    required this.id,
+    required this.ministry,
+    required this.dateTime,
+    required this.idMissionariesList,
+    required this.local,
+  });
 
-  final id = const Uuid();
-  final List<Uuid> _idMissionariesList;
-  final String _ministry;
-  final DateTime _dateTime;
-  final String _local;
-  final String _description;
+  final String id;
+  final List<String> idMissionariesList;
+  final String ministry;
+  final DateTime dateTime;
+  final String local;
+  final String description;
 
-  DateTime get dateTime => _dateTime;
-  DateTime get date => DateTime(_dateTime.year, _dateTime.month, _dateTime.day);
-  String get ministry => _ministry;
-  String get local => _local;
-  String get description => _description;
-  List<Uuid> get idMissionariesList => _idMissionariesList;
+  DateTime get date => DateTime(dateTime.year, dateTime.month, dateTime.day);
 
-  Mission copyWith(
-    String? description, {
-    List<Uuid>? missionaries,
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({
+      'idMissionariesList': idMissionariesList,
+      'date': Timestamp.fromDate(dateTime),
+      'local': local,
+      'name': description,
+    });
+
+    return result;
+  }
+
+  factory Mission.fromMap(Map<String, dynamic> map,
+      {required String id, required String ministryId}) {
+    return Mission(
+      map['name'] ?? '',
+      id: id,
+      ministry: ministryId,
+      dateTime: DateTime.fromMillisecondsSinceEpoch(map['date'].millisecondsSinceEpoch),
+      local: map['local'] ?? '',
+      idMissionariesList: List<String>.from(map['idMissionariesList']),
+    );
+  }
+
+  Mission copyWith({
+    List<String>? idMissionariesList,
     String? ministry,
     DateTime? dateTime,
     String? local,
+    String? description,
   }) {
     return Mission(
-      description ?? _description,
-      missionaries: missionaries ?? _idMissionariesList,
-      ministry: ministry ?? _ministry,
-      dateTime: dateTime ?? _dateTime,
-      local: local ?? _local,
+      description ?? this.description,
+      id: id,
+      ministry: ministry ?? this.ministry,
+      dateTime: dateTime ?? this.dateTime,
+      local: local ?? this.local,
+      idMissionariesList: idMissionariesList ?? this.idMissionariesList,
     );
   }
 }

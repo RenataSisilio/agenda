@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../home/home_repository.dart';
 import '../home/home_controller.dart';
 import 'widgets/date_picker_form_field.dart';
 
@@ -16,7 +15,7 @@ class _NewEventPageState extends State<NewEventPage> {
   final description = TextEditingController();
   final date = TextEditingController();
 
-  final controller = HomeController(HomeRepository());
+  final controller = HomeController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,8 @@ class _NewEventPageState extends State<NewEventPage> {
                                 .toList();
                             final formattedDate = DateTime(
                                 dateAsList[2], dateAsList[1], dateAsList[0]);
-                            controller.addEvent(description.text, formattedDate);
+                            controller.addEvent(
+                                description.text, formattedDate);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 behavior: SnackBarBehavior.floating,
