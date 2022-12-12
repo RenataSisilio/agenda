@@ -86,21 +86,21 @@ class CalendarFirestoreRepository implements CalendarRepository {
     bool coord = false,
   }) async {
     final ministries = <Ministry>[];
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot;
+    final QuerySnapshot<Map<String, dynamic>> querySnap;
 
     if (coord) {
-      querySnapshot = await firestore
+      querySnap = await firestore
           .collection(Paths.ministryCollection)
           .where('coord', isEqualTo: userId)
           .get();
     } else {
-      querySnapshot = await firestore
+      querySnap = await firestore
           .collection(Paths.ministryCollection)
           .where('members', arrayContains: userId)
           .get();
     }
 
-    for (var ministry in querySnapshot.docs) {
+    for (var ministry in querySnap.docs) {
       ministries.add(
         Ministry.fromMap(
           ministry.data(),

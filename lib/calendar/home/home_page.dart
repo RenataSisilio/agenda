@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       drawer: const AppDrawer(),
       body: Center(
         child: BlocBuilder<CalendarController, HomeState>(
-          bloc: context.read<CalendarController>(),
+          bloc: CalendarController.instance,
           builder: (context, state) {
             if (state is SuccessHomeState) {
               return PageView.builder(
@@ -56,7 +56,10 @@ class _HomePageState extends State<HomePage> {
                   );
                   return Center(
                     child: SingleChildScrollView(
-                      child: CalendarMonth(list: controller.rangeDaysList()),
+                      child: CalendarMonth(
+                        list: controller.rangeDaysList(),
+                        allEvents: state.userMissions,
+                      ),
                     ),
                   );
                 },

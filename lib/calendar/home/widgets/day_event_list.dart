@@ -28,7 +28,7 @@ class DayEventList extends StatelessWidget {
               width: 16.0,
               decoration: ShapeDecoration(
                 color: color.withOpacity(
-                    events[index].idMissionariesList.contains(user.id) ? 1 : 0),
+                    events[index].idMissionariesList.contains(myId) ? 1 : 0),
                 shape: CircleBorder(
                   side: BorderSide(width: 2.0, color: color),
                 ),

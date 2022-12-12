@@ -27,7 +27,7 @@ class Day extends StatelessWidget {
     final text = Text('$day');
     return currentMonth
         ? (events?.length ?? 0) > 0
-            ? events!.any((event) => event.idMissionariesList.contains(user.id))
+            ? events!.any((event) => event.idMissionariesList.contains(myId))
                 ? ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(0),

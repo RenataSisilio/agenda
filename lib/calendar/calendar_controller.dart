@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../globals.dart';
 import '../models/ministry.dart';
 import '../models/mission.dart';
 import 'calendar_repository.dart';
@@ -9,6 +11,7 @@ class CalendarController extends Cubit<HomeState> {
   static final instance = CalendarController._();
 
   CalendarController._() : super(LoadingHomeState()) {
+    myId = FirebaseAuth.instance.currentUser!.uid;
     getData();
   }
 
@@ -18,8 +21,7 @@ class CalendarController extends Cubit<HomeState> {
     emit(LoadingHomeState());
     firestoreRepo = CalendarFirestoreRepository();
     try {
-      final missions =
-          await firestoreRepo.getMissionsByMinistry('test-ministry-id');
+      final missions = await firestoreRepo.getMissionsByUser(myId!);
       emit(SuccessHomeState(missions));
     } catch (e) {
       emit(ErrorHomeState());

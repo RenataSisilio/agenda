@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 import '../../../globals.dart';
+import '../../../models/mission.dart';
 import 'day.dart';
 
 class CalendarMonth extends StatelessWidget {
   const CalendarMonth({
-    Key? key,
+    super.key,
     required this.list,
-  }) : super(key: key);
+    required this.allEvents,
+  });
 
   final List<DateTime> list;
+  final List<Mission> allEvents;
 
   @override
   Widget build(BuildContext context) {
