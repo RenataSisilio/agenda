@@ -8,6 +8,7 @@ import 'auth/forgot_password_screen.dart';
 import 'auth/profile_page.dart';
 import 'auth/sign_in_page.dart';
 import 'auth/splash_page.dart';
+import 'calendar/calendar_controller.dart';
 import 'firebase_options.dart';
 import 'calendar/home/home_page.dart';
 import 'calendar/new_event/new_event_page.dart';
@@ -36,12 +37,18 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => BlocProvider(
+              create: (context) => CalendarController.instance(),
+              child: const HomePage(),
+            ),
         '/splash': (context) => const SplashPage(),
         '/sign-in': (context) => const SignInPage(),
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
-        '/new-event': (context) => const NewEventPage(),
+        '/new-event': (context) => BlocProvider(
+              create: (context) => CalendarController.instance(),
+              child: const NewEventPage(),
+            ),
       },
       initialRoute: '/splash',
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../home/home_controller.dart';
+import '../calendar_controller.dart';
 import 'widgets/date_picker_form_field.dart';
 
 class NewEventPage extends StatefulWidget {
@@ -15,7 +15,7 @@ class _NewEventPageState extends State<NewEventPage> {
   final description = TextEditingController();
   final date = TextEditingController();
 
-  final controller = HomeController();
+  final controller = CalendarController.instance();
 
   @override
   Widget build(BuildContext context) {

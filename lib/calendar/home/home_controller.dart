@@ -1,29 +1,10 @@
-import 'package:agenda/models/mission.dart';
-import 'package:bloc/bloc.dart';
-
 import '../../globals.dart';
 import 'home_repository.dart';
-import 'home_state.dart';
 
-class HomeController extends Cubit<HomeState> {
-  HomeController() : super(LoadingHomeState()) {
-    getData();
-  }
+class HomeController {
 
   late final HomeFirestoreRepository firestoreRepo;
   DateTime _date = today;
-
-  void getData() async {
-    emit(LoadingHomeState());
-    firestoreRepo = HomeFirestoreRepository();
-    try {
-      final missions =
-          await firestoreRepo.getMissionsByMinistry('test-ministry-id');
-      emit(SuccessHomeState(missions));
-    } catch (e) {
-      emit(ErrorHomeState());
-    }
-  }
 
   DateTime get date => _date;
 
@@ -50,23 +31,5 @@ class HomeController extends Cubit<HomeState> {
       list.add(day);
     }
     return list;
-  }
-
-  Future<bool> addEvent(String description, DateTime date) async {
-    emit(LoadingHomeState());
-    final bool success;
-    try {
-      success = await firestoreRepo.saveMission(
-        Mission(description,
-            ministry: 'ministryId',
-            dateTime: date,
-            idMissionariesList: ['testUserId'],
-            local: 'local'),
-      );
-      getData();
-    } catch (e) {
-      return false;
-    }
-    return success;
   }
 }
