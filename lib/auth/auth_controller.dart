@@ -20,12 +20,19 @@ class AuthController extends Cubit<AppAuthState> {
         FirebaseFirestore.instance.collection(Paths.userCollection);
     final database = await userCollection.get();
 
-    FirebaseAuth.instance.userChanges().listen((user) {
+    FirebaseAuth.instance.userChanges().listen((user) async {
       if (user != null) {
         emit(LoggedAuthState());
-        if (database.docs.indexWhere((element) => element.id == user.uid) ==
-            -1) {
+        final index = database.docs.indexWhere((e) => e.id == user.uid);
+        if (index == -1) {
           userCollection.doc(user.uid).set({'name': user.displayName});
+        } else {
+          final querySnapshot = await userCollection.doc(user.uid).get();
+          final data = querySnapshot.data();
+          final currentName = data?['name'] ?? '';
+          if (user.displayName != currentName) {
+            userCollection.doc(user.uid).set({'name': user.displayName});
+          }
         }
       } else {
         emit(NotLoggedAuthState());
