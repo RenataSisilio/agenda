@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
       actions: [
         SignedOutAction(
           ((context) {
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).pushReplacementNamed('/splash');
           }),
         ),
       ],
