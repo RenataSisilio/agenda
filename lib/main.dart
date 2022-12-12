@@ -1,3 +1,4 @@
+import 'package:agenda/calendar/calendar_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,12 +37,18 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => BlocProvider(
+              create: (context) => CalendarController.instance(),
+              child: const HomePage(),
+            ),
         '/splash': (context) => const SplashPage(),
         '/sign-in': (context) => const SignInPage(),
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
-        '/new-event': (context) => const NewEventPage(),
+        '/new-event': (context) => BlocProvider(
+              create: (context) => CalendarController.instance(),
+              child: const NewEventPage(),
+            ),
       },
       initialRoute: '/splash',
     );

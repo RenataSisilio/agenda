@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../globals.dart';
+import '../calendar_controller.dart';
 import 'home_state.dart';
 import 'widgets/app_drawer.dart';
 import 'widgets/calendar_month.dart';
@@ -35,8 +36,8 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const AppDrawer(),
       body: Center(
-        child: BlocBuilder<HomeController, HomeState>(
-          bloc: controller,
+        child: BlocBuilder<CalendarController, HomeState>(
+          bloc: context.read<CalendarController>(),
           builder: (context, state) {
             if (state is SuccessHomeState) {
               return PageView.builder(
