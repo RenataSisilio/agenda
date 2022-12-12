@@ -47,9 +47,13 @@ class CalendarFirestoreRepository implements CalendarRepository {
   }
 
   @override
-  Future<List<Mission>> getMissionsByUser(userId) {
-    // TODO: implement getMissionsByUser
-    throw UnimplementedError();
+  Future<List<Mission>> getMissionsByUser(userId) async {
+    final ministries = await getMinistries(userId);
+    final missions = <Mission>[];
+    for (var ministry in ministries) {
+      missions.addAll(await getMissionsByMinistry(ministry.id!));
+    }
+    return missions;
   }
 
   @override
