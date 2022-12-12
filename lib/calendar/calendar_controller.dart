@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 
 import '../models/ministry.dart';
 import '../models/mission.dart';
-import 'home/home_repository.dart';
+import 'calendar_repository.dart';
 import 'home/home_state.dart';
 
 class CalendarController extends Cubit<HomeState> {
@@ -12,11 +12,11 @@ class CalendarController extends Cubit<HomeState> {
     getData();
   }
 
-  late final HomeFirestoreRepository firestoreRepo;
+  late final CalendarFirestoreRepository firestoreRepo;
 
   void getData() async {
     emit(LoadingHomeState());
-    firestoreRepo = HomeFirestoreRepository();
+    firestoreRepo = CalendarFirestoreRepository();
     try {
       final missions =
           await firestoreRepo.getMissionsByMinistry('test-ministry-id');

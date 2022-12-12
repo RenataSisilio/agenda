@@ -1,9 +1,8 @@
 import '../../globals.dart';
-import 'home_repository.dart';
+import '../calendar_repository.dart';
 
 class HomeController {
-
-  late final HomeFirestoreRepository firestoreRepo;
+  late final CalendarFirestoreRepository firestoreRepo;
   DateTime _date = today;
 
   DateTime get date => _date;

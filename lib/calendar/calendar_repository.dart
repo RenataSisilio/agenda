@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/ministry.dart';
-import '../../models/mission.dart';
-import '../../paths.dart';
+import '../models/ministry.dart';
+import '../models/mission.dart';
+import '../paths.dart';
 
-abstract class HomeRepository {
+abstract class CalendarRepository {
   Future<List<Mission>> getMissionsByMinistry(String ministryId);
   Future<List<Mission>> getMissionsByUser(String userId);
   Future<bool> saveMission(Mission mission);
@@ -22,7 +22,7 @@ abstract class HomeRepository {
   Future<Map<String, String>> getUserNames();
 }
 
-class HomeFirestoreRepository implements HomeRepository {
+class CalendarFirestoreRepository implements CalendarRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override

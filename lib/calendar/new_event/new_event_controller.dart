@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../home/home_repository.dart';
+import '../calendar_repository.dart';
 import 'new_event_state.dart';
 
 class NewEventController extends Cubit<NewEventState> {
@@ -10,7 +10,7 @@ class NewEventController extends Cubit<NewEventState> {
     getUserNames();
   }
 
-  final firestoreRepo = HomeFirestoreRepository();
+  final firestoreRepo = CalendarFirestoreRepository();
   final userNames = <String, String>{};
 
   void getMyMinistries() async {
