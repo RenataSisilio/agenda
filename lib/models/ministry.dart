@@ -1,51 +1,58 @@
-import 'package:uuid/uuid.dart';
+//import 'package:agenda/models/mission.dart';
 
 class Ministry {
   Ministry(
-    this._name, {
-    required Uuid coord,
-  }) : _coord = coord;
+    this.name, {
+    this.id,
+    required this.coord,
+    required this.members,
+  });
 
-  final String _name;
-  final Uuid _coord;
-  final List<Uuid> _members = [];
-  final List<Uuid> _missions = [];
+  final String? id;
+  final String name;
+  final String coord;
+  final List<String> members;
+  //final List<Mission> missions = [];
 
-  String get name => _name;
-  Uuid get coord => _coord;
-  List<Uuid> get members => _members;
-  List<Uuid> get missions => _missions;
-
-  void addMember(Uuid id) {
-    if (!_members.contains(id)) {
-      _members.add(id);
+  void addMember(String id) {
+    if (!members.contains(id)) {
+      members.add(id);
     }
   }
 
-  void removeMember(Uuid id) {
-    _members.remove(id);
-  }
-
-  void addMission(Uuid id) {
-    if (!_missions.contains(id)) {
-      _missions.add(id);
-    }
-  }
-
-  void removeMission(Uuid id) {
-    _missions.remove(id);
+  void removeMember(String id) {
+    members.remove(id);
   }
 
   Ministry copyWith({
     String? name,
-    Uuid? coord,
+    String? coord,
   }) {
     final newMinistry = Ministry(
-      name ?? _name,
-      coord: coord ?? _coord,
+      id: id,
+      name ?? this.name,
+      coord: coord ?? this.coord,
+      members: members,
     );
-    newMinistry._members.addAll(_members);
-    newMinistry._missions.addAll(_missions);
+    //newMinistry.missions.addAll(missions);
     return newMinistry;
+  }
+
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
+
+    result.addAll({'name': name});
+    result.addAll({'coord': coord});
+
+    return result;
+  }
+
+  factory Ministry.fromMap(Map<String, dynamic> map, {required String id}) {
+    return Ministry(
+      map['name'] ?? '',
+      id: id,
+      coord: map['coord'] ?? '',
+      members: List.from(map['members']),
+    );
   }
 }

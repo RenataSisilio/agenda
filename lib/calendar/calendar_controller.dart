@@ -5,14 +5,10 @@ import 'home/home_repository.dart';
 import 'home/home_state.dart';
 
 class CalendarController extends Cubit<HomeState> {
-  static final _instance = CalendarController._();
+  static final instance = CalendarController._();
 
   CalendarController._() : super(LoadingHomeState()) {
     getData();
-  }
-
-  factory CalendarController.instance() {
-    return _instance;
   }
 
   late final HomeFirestoreRepository firestoreRepo;
@@ -29,16 +25,27 @@ class CalendarController extends Cubit<HomeState> {
     }
   }
 
-  Future<bool> addEvent(String description, DateTime date) async {
+  Future<bool> addEvent({
+    required String description,
+    required String ministryId,
+    required String date,
+    required String hour,
+    required String local,
+    required List<String> idMissionariesList,
+  }) async {
     emit(LoadingHomeState());
+    
+    final dateAsList = date.split('/').map((e) => int.parse(e)).toList();
+    final formattedDate = DateTime(dateAsList[2], dateAsList[1], dateAsList[0]);
+
     final bool success;
     try {
       success = await firestoreRepo.saveMission(
         Mission(description,
-            ministry: 'ministryId',
-            dateTime: date,
-            idMissionariesList: ['testUserId'],
-            local: 'local'),
+            ministry: ministryId,
+            dateTime: formattedDate,
+            idMissionariesList: idMissionariesList,
+            local: local),
       );
       getData();
     } catch (e) {

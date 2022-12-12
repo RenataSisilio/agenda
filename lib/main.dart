@@ -38,17 +38,14 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => BlocProvider(
-              create: (context) => CalendarController.instance(),
+              create: (context) => CalendarController.instance,
               child: const HomePage(),
             ),
         '/splash': (context) => const SplashPage(),
         '/sign-in': (context) => const SignInPage(),
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
-        '/new-event': (context) => BlocProvider(
-              create: (context) => CalendarController.instance(),
-              child: const NewEventPage(),
-            ),
+        '/new-event': (context) =>  const NewEventPage(),
       },
       initialRoute: '/splash',
     );
