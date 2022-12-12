@@ -11,7 +11,10 @@ abstract class HomeRepository {
   Future<bool> editMission(Mission mission);
   Future<bool> deleteMission(String missionId);
 
-  Future<List<Ministry>> getMinistries(String userId);
+  Future<List<Ministry>> getMinistries(
+    String userId, {
+    bool coord = false,
+  });
   Future<bool> saveMinistry(Ministry ministry);
   Future<bool> editMinistry(Ministry ministry);
   Future<bool> deleteMinistry(String ministryId);
@@ -72,9 +75,35 @@ class HomeFirestoreRepository implements HomeRepository {
   }
 
   @override
-  Future<List<Ministry>> getMinistries(String userId) {
-    // TODO: implement getMinistries
-    throw UnimplementedError();
+  Future<List<Ministry>> getMinistries(
+    String userId, {
+    bool coord = false,
+  }) async {
+    final ministries = <Ministry>[];
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot;
+
+    if (coord) {
+      querySnapshot = await firestore
+          .collection(Paths.ministryCollection)
+          .where('coord', isEqualTo: userId)
+          .get();
+    } else {
+      querySnapshot = await firestore
+          .collection(Paths.ministryCollection)
+          .where('members', arrayContains: userId)
+          .get();
+    }
+    
+    for (var ministry in querySnapshot.docs) {
+      ministries.add(
+        Ministry.fromMap(
+          ministry.data(),
+          id: ministry.id,
+        ),
+      );
+    }
+
+    return ministries;
   }
 
   @override
