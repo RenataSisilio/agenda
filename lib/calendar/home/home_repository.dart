@@ -18,6 +18,8 @@ abstract class HomeRepository {
   Future<bool> saveMinistry(Ministry ministry);
   Future<bool> editMinistry(Ministry ministry);
   Future<bool> deleteMinistry(String ministryId);
+
+  Future<Map<String, String>> getUserNames();
 }
 
 class HomeFirestoreRepository implements HomeRepository {
@@ -93,7 +95,7 @@ class HomeFirestoreRepository implements HomeRepository {
           .where('members', arrayContains: userId)
           .get();
     }
-    
+
     for (var ministry in querySnapshot.docs) {
       ministries.add(
         Ministry.fromMap(
@@ -124,5 +126,18 @@ class HomeFirestoreRepository implements HomeRepository {
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Future<Map<String, String>> getUserNames() async {
+    final missions = <String, String>{};
+    final querySnapshot =
+        await firestore.collection(Paths.userCollection).get();
+    for (var user in querySnapshot.docs) {
+      final data = user.data();
+      missions[user.id] = data['name'];
+    }
+
+    return missions;
   }
 }

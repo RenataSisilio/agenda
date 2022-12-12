@@ -7,9 +7,11 @@ import 'new_event_state.dart';
 class NewEventController extends Cubit<NewEventState> {
   NewEventController() : super(LoadingNewEventState()) {
     getMyMinistries();
+    getUserNames();
   }
 
   final firestoreRepo = HomeFirestoreRepository();
+  final userNames = <String, String>{};
 
   void getMyMinistries() async {
     emit(LoadingNewEventState());
@@ -20,5 +22,10 @@ class NewEventController extends Cubit<NewEventState> {
     } catch (e) {
       emit(ErrorNewEventState());
     }
+  }
+
+  void getUserNames() async {
+    final map = await firestoreRepo.getUserNames();
+    userNames.addAll(map);
   }
 }
