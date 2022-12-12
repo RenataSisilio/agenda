@@ -20,8 +20,10 @@ class _NewEventPageState extends State<NewEventPage> {
   final formKey = GlobalKey<FormState>();
   final description = TextEditingController();
   final date = TextEditingController();
+  final hour = TextEditingController();
   final ministry = ValueNotifier<Ministry?>(null);
   final local = TextEditingController();
+  final assignees = <ValueNotifier<bool>>[];
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,13 @@ class _NewEventPageState extends State<NewEventPage> {
                             shrinkWrap: true,
                             itemCount: value.members.length,
                             itemBuilder: (context, index) {
-                              return AssigneeTile(value.members[index]);
+                              if (assignees.length <= index) {
+                                assignees.add(ValueNotifier(false));
+                              }
+                              return AssigneeTile(
+                                value.members[index],
+                                isAssigned: assignees[index],
+                              );
                             },
                           )
                         : const SizedBox.shrink();
@@ -79,12 +87,12 @@ class _NewEventPageState extends State<NewEventPage> {
                 const SizedBox(height: 20),
                 SaveButton(
                   formKey: formKey,
-                  description: description.text,
-                  ministry: ministry.value?.id ?? 'unregistered',
-                  date: date.text,
-                  hour: '',
-                  local: local.text,
-                  idMissionariesList: [],
+                  description: description,
+                  ministry: ministry,
+                  date: date,
+                  hour: hour,
+                  local: local,
+                  assignees: assignees,
                 ),
               ],
             ),
@@ -94,4 +102,3 @@ class _NewEventPageState extends State<NewEventPage> {
     );
   }
 }
-

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/ministry.dart';
 import '../../calendar_controller.dart';
 
 class SaveButton extends StatelessWidget {
@@ -11,16 +12,16 @@ class SaveButton extends StatelessWidget {
     required this.date,
     required this.hour,
     required this.local,
-    required this.idMissionariesList,
+    required this.assignees,
   }) : super(key: key);
 
   final GlobalKey<FormState> formKey;
-  final String description;
-  final String ministry;
-  final String date;
-  final String hour;
-  final String local;
-  final List<String> idMissionariesList;
+  final TextEditingController description;
+  final ValueNotifier<Ministry?> ministry;
+  final TextEditingController date;
+  final TextEditingController hour;
+  final TextEditingController local;
+  final List<ValueNotifier<bool>> assignees;
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +34,17 @@ class SaveButton extends StatelessWidget {
                 final navigator = Navigator.of(context);
                 final scaffoldMessenger = ScaffoldMessenger.of(context);
                 if (await CalendarController.instance.addEvent(
-                  description: description,
-                  ministryId: ministry,
-                  date: date,
-                  hour: hour,
-                  local: local,
-                  idMissionariesList: [],
+                  description: description.text,
+                  ministry: ministry.value!,
+                  date: date.text,
+                  hour: hour.text,
+                  local: local.text,
+                  assignees: assignees.map((e) => e.value).toList(),
                 )) {
                   scaffoldMessenger.showSnackBar(
                     SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      content: Text('$description criado com sucesso!'),
+                      content: Text('${description.text} criado com sucesso!'),
                     ),
                   );
                   if (navigator.canPop()) {
