@@ -50,10 +50,12 @@ class _NewEventPageState extends State<NewEventPage> {
                   bloc: NewEventController(),
                   builder: (context, state) {
                     return MinistryFormField(
-                        ministries: state is SuccessNewEventState
-                            ? state.userMinistries
-                            : null,
-                        controller: ministry);
+                      ministries: state is SuccessNewEventState
+                          ? state.userMinistries
+                          : null,
+                      controller: ministry,
+                      assignList: assignees,
+                    );
                   },
                 ),
                 DatePickerFormField(date),

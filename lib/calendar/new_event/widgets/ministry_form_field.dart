@@ -7,10 +7,12 @@ class MinistryFormField extends StatelessWidget {
     Key? key,
     required this.ministries,
     required this.controller,
+    required this.assignList,
   }) : super(key: key);
 
   final List<Ministry>? ministries;
   final ValueNotifier<Ministry?> controller;
+  final List<ValueNotifier<bool>> assignList;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,9 @@ class MinistryFormField extends StatelessWidget {
           .toList(),
       onChanged: (value) {
         controller.value = value!;
+        for (var element in assignList) {
+          element.value = false;
+        }
       },
     );
   }
