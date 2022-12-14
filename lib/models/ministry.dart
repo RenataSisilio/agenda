@@ -1,5 +1,3 @@
-//import 'package:agenda/models/mission.dart';
-
 class Ministry {
   Ministry(
     this.name, {
@@ -12,7 +10,6 @@ class Ministry {
   final String name;
   final String coord;
   final List<String> members;
-  //final List<Mission> missions = [];
 
   void addMember(String id) {
     if (!members.contains(id)) {
@@ -34,7 +31,6 @@ class Ministry {
       coord: coord ?? this.coord,
       members: members,
     );
-    //newMinistry.missions.addAll(missions);
     return newMinistry;
   }
 
