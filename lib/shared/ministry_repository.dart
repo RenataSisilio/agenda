@@ -11,6 +11,8 @@ abstract class MinistryRepository {
   Future<bool> saveMinistry(Ministry ministry);
   Future<bool> editMinistry(Ministry ministry);
   Future<bool> deleteMinistry(String ministryId);
+  
+  Future<Map<String, String>> getUserNames();
 }
 
 class MinistryFirestoreRepository implements MinistryRepository {
@@ -64,5 +66,18 @@ class MinistryFirestoreRepository implements MinistryRepository {
   Future<bool> saveMinistry(Ministry ministry) {
     // TODO: implement saveMinistry
     throw UnimplementedError();
+  }
+  
+  @override
+  Future<Map<String, String>> getUserNames() async {
+    final missions = <String, String>{};
+    final querySnapshot =
+        await firestore.collection(Paths.userCollection).get();
+    for (var user in querySnapshot.docs) {
+      final data = user.data();
+      missions[user.id] = data['name'];
+    }
+
+    return missions;
   }
 }

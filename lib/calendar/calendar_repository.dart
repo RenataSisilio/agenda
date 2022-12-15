@@ -10,8 +10,6 @@ abstract class CalendarRepository {
   Future<bool> saveMission(Mission mission);
   Future<bool> editMission(Mission mission);
   Future<bool> deleteMission(String missionId);
-
-  Future<Map<String, String>> getUserNames();
 }
 
 class CalendarFirestoreRepository implements CalendarRepository {
@@ -73,18 +71,5 @@ class CalendarFirestoreRepository implements CalendarRepository {
     } catch (e) {
       return false;
     }
-  }
-
-  @override
-  Future<Map<String, String>> getUserNames() async {
-    final missions = <String, String>{};
-    final querySnapshot =
-        await firestore.collection(Paths.userCollection).get();
-    for (var user in querySnapshot.docs) {
-      final data = user.data();
-      missions[user.id] = data['name'];
-    }
-
-    return missions;
   }
 }
