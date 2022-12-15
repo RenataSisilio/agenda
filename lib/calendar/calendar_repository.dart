@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/ministry.dart';
 import '../models/mission.dart';
 import '../paths.dart';
+import '../shared/ministry_repository.dart';
 
 abstract class CalendarRepository {
   Future<List<Mission>> getMissionsByMinistry(String ministryId);
@@ -10,14 +10,6 @@ abstract class CalendarRepository {
   Future<bool> saveMission(Mission mission);
   Future<bool> editMission(Mission mission);
   Future<bool> deleteMission(String missionId);
-
-  Future<List<Ministry>> getMinistries(
-    String userId, {
-    bool coord = false,
-  });
-  Future<bool> saveMinistry(Ministry ministry);
-  Future<bool> editMinistry(Ministry ministry);
-  Future<bool> deleteMinistry(String ministryId);
 
   Future<Map<String, String>> getUserNames();
 }
@@ -48,18 +40,13 @@ class CalendarFirestoreRepository implements CalendarRepository {
 
   @override
   Future<List<Mission>> getMissionsByUser(userId) async {
-    final ministries = await getMinistries(userId);
+    final ministries =
+        await MinistryFirestoreRepository().getMinistries(userId);
     final missions = <Mission>[];
     for (var ministry in ministries) {
       missions.addAll(await getMissionsByMinistry(ministry.id!));
     }
     return missions;
-  }
-
-  @override
-  Future<bool> deleteMinistry(String ministryId) {
-    // TODO: implement deleteMinistry
-    throw UnimplementedError();
   }
 
   @override
@@ -69,52 +56,8 @@ class CalendarFirestoreRepository implements CalendarRepository {
   }
 
   @override
-  Future<bool> editMinistry(Ministry ministry) {
-    // TODO: implement editMinistry
-    throw UnimplementedError();
-  }
-
-  @override
   Future<bool> editMission(Mission mission) {
     // TODO: implement editMission
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Ministry>> getMinistries(
-    String userId, {
-    bool coord = false,
-  }) async {
-    final ministries = <Ministry>[];
-    final QuerySnapshot<Map<String, dynamic>> querySnap;
-
-    if (coord) {
-      querySnap = await firestore
-          .collection(Paths.ministryCollection)
-          .where('coord', isEqualTo: userId)
-          .get();
-    } else {
-      querySnap = await firestore
-          .collection(Paths.ministryCollection)
-          .where('members', arrayContains: userId)
-          .get();
-    }
-
-    for (var ministry in querySnap.docs) {
-      ministries.add(
-        Ministry.fromMap(
-          ministry.data(),
-          id: ministry.id,
-        ),
-      );
-    }
-
-    return ministries;
-  }
-
-  @override
-  Future<bool> saveMinistry(Ministry ministry) {
-    // TODO: implement saveMinistry
     throw UnimplementedError();
   }
 
