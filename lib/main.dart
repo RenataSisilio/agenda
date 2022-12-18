@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'admin/ministry_list/ministry_list_page.dart';
 import 'auth/auth_controller.dart';
 import 'auth/forgot_password_screen.dart';
 import 'auth/profile_page.dart';
@@ -42,8 +43,9 @@ class MyApp extends StatelessWidget {
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
         '/new-event': (context) => const NewEventPage(),
+        '/admin': (context) => const MinistryListPage(),
       },
-      initialRoute: '/splash',
+      initialRoute: '/admin',
     );
   }
 }
