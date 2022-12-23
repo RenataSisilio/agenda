@@ -39,6 +39,7 @@ class Ministry {
 
     result.addAll({'name': name});
     result.addAll({'coord': coord});
+    result.addAll({'members': members});
 
     return result;
   }

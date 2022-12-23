@@ -9,9 +9,8 @@ abstract class MinistryRepository {
     bool coord = false,
   });
   Future<List<Ministry>> getAllMinistries();
-  Future<bool> saveMinistry(Ministry ministry);
-  Future<bool> editMinistry(Ministry ministry);
-  Future<bool> deleteMinistry(String ministryId);
+  Future<void> saveMinistry(Ministry ministry);
+  Future<void> deleteMinistry(String ministryId);
 
   Future<Map<String, String>> getUserNames();
 }
@@ -22,12 +21,6 @@ class MinistryFirestoreRepository implements MinistryRepository {
   @override
   Future<bool> deleteMinistry(String ministryId) {
     // TODO: implement deleteMinistry
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> editMinistry(Ministry ministry) {
-    // TODO: implement editMinistry
     throw UnimplementedError();
   }
 
@@ -64,9 +57,15 @@ class MinistryFirestoreRepository implements MinistryRepository {
   }
 
   @override
-  Future<bool> saveMinistry(Ministry ministry) {
-    // TODO: implement saveMinistry
-    throw UnimplementedError();
+  Future<void> saveMinistry(Ministry ministry) async {
+    try {
+      await firestore
+          .collection(Paths.ministryCollection)
+          .doc(ministry.id)
+          .set(ministry.toMap());
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
