@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'admin/ministry_list/ministry_list_page.dart';
+import 'admin/new_ministry/new_ministry_page.dart';
 import 'auth/auth_controller.dart';
 import 'auth/forgot_password_screen.dart';
 import 'auth/profile_page.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/new-event': (context) => const NewEventPage(),
         '/admin': (context) => const MinistryListPage(),
+        '/new-ministry': (context) => const NewMinistryPage(),
       },
       initialRoute: '/admin',
     );

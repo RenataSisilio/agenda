@@ -22,11 +22,12 @@ class _MinistryListPageState extends State<MinistryListPage> {
         title: const Text('Ministérios'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).pushNamed('/new-ministry'),
         tooltip: 'Novo',
         child: const Icon(Icons.add),
       ),
       body: BlocBuilder<MinistryListController, MinistryListState>(
+        bloc: controller,
         builder: (context, state) {
           if (state is ErrorMinistryListState) {
             return const Center(
